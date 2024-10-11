@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotify</title>
+  </head>
+  <body>
+    <h1>Spotify</h1>
+
+    <label for="search-by">
+      <span>Search by:</span>
+    </label>
+
+    <select id="search-by">
+      <option value="title">Title</option>
+      <option value="artist">Artist</option>
+      <option value="genre">Genre</option>
+    </select>
+
+    <label for="sort-by">
+      <span>Sort by:</span>
+    </label>
+    <select id="sort-by">
+      <option value="popularity">Popularity</option>
+      <option value="duration">Duration</option>
+    </select>
+
+    <label for="checkbox">Include explicit songs?</label>
+    <input type="checkbox" id="checkbox" />
+
+    <label for="songSearch">Find song:</label>
+    <input type="text" id="songSearch" />
+
+    <button id="search-button" onclick="search()">Confirm</button>
+
+    <script src="script.js"></script>
+  </body>
+</html>
