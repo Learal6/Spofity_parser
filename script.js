@@ -19,10 +19,12 @@ async function search(){
   let result = await prom.json();
   songs = result;
 
+  //sort returned songs
   sortSongs(songs, sortBy);
 }
 
-//cite fellow student for sort the funciton
+//This function sorts the returned song list by the desiered parameter
+//cite fellow student for info on the sort the funciton
 function sortSongs(songs, status){
 
   if (status == 'popularity'){
