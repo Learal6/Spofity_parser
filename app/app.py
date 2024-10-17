@@ -11,6 +11,7 @@ cors = CORS(app)
 def search_songs():
 
     filtered = []
+    app.logger.warning('testing warning log')
 
     searchBy = request.args.get('searchBy', default='title')
     sortBy = request.args.get('sortBy', default='popularity')
@@ -26,36 +27,53 @@ def search_songs():
 
     #Filter data
     for song in data2023:
-        if  includeExplicit == 'true':
+
+        #include all songs
+        if includeExplicit == 'true':
+
             field = song[searchBy]
-            if type(field) == list:
+
+            if searchBy == 'title' and songSearch in field.lower():
+                filtered.append(song)
+                
+            elif searchBy == 'genres' and type(field) == list:
                 for s in field:
-                    if songSearch in s.lower():
+                    if songSearch.lower() in s.lower():
                         filtered.append(song)
-                    else: 
-                        continue
-            else:
-                if songSearch in field.lower():
-                    filtered.append(song)
+                        break
+
+            elif searchBy == 'artists' and type(field) == list:
+                for s in field:
+                    if songSearch.lower() in s.lower():
+                        filtered.append(song)
+                        break
+
+        #filter out explicit songs
         elif includeExplicit == 'false':
-            #filter for non explicit songs
-            if not song['explicit']:
+    
+            #dont add the song if its explicit
+            if song.get('explicit', True):
+                break
+            
+            else:
                 field = song[searchBy]
-                if type(field) == list:
+
+                if searchBy == 'title' and songSearch in field.lower():
+                    filtered.append(song)
+                    
+                elif searchBy == 'genres' and type(field) == list:
                     for s in field:
-                        if songSearch in s.lower():
+                        if songSearch.lower() in s.lower():
                             filtered.append(song)
-                        else: 
-                            continue
-                else:
-                    if songSearch in field.lower():
-                        filtered.append(song)
- 
+                            break
+
+                elif searchBy == 'artists' and type(field) == list:
+                    for s in field:
+                        if songSearch.lower() in s.lower():
+                            filtered.append(song)
+                            break
     return filtered
-
-def duration_sort():
-    pass
-
 
 if __name__ == '__main__':
     app.run(debug=True)
+ 
